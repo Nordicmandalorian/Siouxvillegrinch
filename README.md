@@ -1,21 +1,16 @@
-# The Siouxville Grinch App — v0.2
+# The Siouxville Grinch App v0.3
+Standalone mobile-first Next.js/PWA prototype based on the existing Siouxville Grinch website's visual identity and content.
 
-Website-to-app prototype based on the existing public Siouxville Grinch website.
+## What changed from v0.2
+- Website links removed from core navigation.
+- About, pricing, Bored?, media, reviews, sponsorship, booking and messages are native app screens.
+- Booking fields mirror the existing website booking form and target Hello@thesiouxvillegrinch.com.
+- For this test build, booking/messages/reviews/sponsorship use the device email client via `mailto:`. A production backend (Supabase/server API) can replace this so submissions send directly without opening email.
+- PWA manifest included.
 
 ## Run
 npm install
 npm run dev
 
-## Build
-npm run build
-
-## v0.2
-- Uses the established black / neon-green / red Siouxville Grinch visual identity.
-- Uses the official website logo and Grinch collage directly from thesiouxvillegrinch.com.
-- Mobile bottom navigation: Home, Events, Book, Message, More.
-- Website-derived About, Bookings, Bored?, Media, Reviews and Sponsorship destinations.
-- Prototype in-app booking and Grinch-message flows.
-- Events screen prepared for a future shared calendar/backend.
-
-## Next
-Supabase backend, real booking submission, live event calendar, admin dashboard, social links, PWA manifest/install support, notifications, and additional site media.
+## Deploy
+Push the project to your Vercel project as before.
