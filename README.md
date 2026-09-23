@@ -1,45 +1,21 @@
-# Siouxville Grinch App Prototype v0.1.1
+# The Siouxville Grinch App — v0.2
 
-A first-pass mobile-first prototype for The Siouxville Grinch.
+Website-to-app prototype based on the existing public Siouxville Grinch website.
 
-## Included now
-
-- Branded home screen
-- Bottom navigation
-- Events screen with sample events
-- Booking request form (front-end only)
-- Grinch messages form (front-end only)
-- More screen for About, Media, Reviews, Sponsorship, Charity, Socials
-- Mobile responsive layout inspired by the current Siouxville Grinch website
-
-## Run it
-
-```bash
+## Run
 npm install
 npm run dev
-```
 
-Then open http://localhost:3000
+## Build
+npm run build
 
-## Recommended next development sprint
+## v0.2
+- Uses the established black / neon-green / red Siouxville Grinch visual identity.
+- Uses the official website logo and Grinch collage directly from thesiouxvillegrinch.com.
+- Mobile bottom navigation: Home, Events, Book, Message, More.
+- Website-derived About, Bookings, Bored?, Media, Reviews and Sponsorship destinations.
+- Prototype in-app booking and Grinch-message flows.
+- Events screen prepared for a future shared calendar/backend.
 
-1. Replace prototype logo block with the real Siouxville Grinch logo/artwork.
-2. Connect Supabase.
-3. Add `events`, `bookings`, `messages`, `site_settings`, `social_links`, `media`, and `reviews` tables.
-4. Add a private `/admin` dashboard.
-5. Add booking statuses: New, Contacted, Tentative, Confirmed, Completed, Declined.
-6. Allow confirmed bookings to be published as public events.
-7. Wire social/contact buttons to the real URLs and contact info.
-8. Turn the site into an installable PWA.
-9. Add a QR landing route for live appearances.
-10. Prepare Android wrapper/AAB only after the web/PWA prototype is stable.
-
-## Presentation note
-
-This build intentionally focuses on the user-facing concept and navigation. The booking and message buttons simulate success locally but do not yet submit data anywhere.
-
-
-## v0.1.1 patch
-- Updated Next.js to 15.5.26, the September 22, 2026 Maintenance LTS security release.
-- Updated React and React DOM to 19.1.1.
-- No app UI or feature changes.
+## Next
+Supabase backend, real booking submission, live event calendar, admin dashboard, social links, PWA manifest/install support, notifications, and additional site media.
