@@ -1,4 +1,4 @@
-# Siouxville Grinch App Prototype v0.1
+# Siouxville Grinch App Prototype v0.1.1
 
 A first-pass mobile-first prototype for The Siouxville Grinch.
 
@@ -37,3 +37,9 @@ Then open http://localhost:3000
 ## Presentation note
 
 This build intentionally focuses on the user-facing concept and navigation. The booking and message buttons simulate success locally but do not yet submit data anywhere.
+
+
+## v0.1.1 patch
+- Updated Next.js to 15.5.26, the September 22, 2026 Maintenance LTS security release.
+- Updated React and React DOM to 19.1.1.
+- No app UI or feature changes.
