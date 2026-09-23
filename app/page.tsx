@@ -26,9 +26,52 @@ function EventsScreen(){return <div className="screen-content"><Header kicker="W
   <section className="calendar-shell card"><div className="calendar-top"><b>SEPTEMBER 2026</b><span>Public appearances</span></div><div className="legend"><span><i className="available"/>Available</span><span><i className="pending"/>Pending</span><span><i className="booked"/>Booked</span></div><div className="empty-calendar"><CalendarDays/><h3>Calendar connection is next.</h3><p>No fake events here. Once the shared event data is connected, confirmed public appearances will populate this screen automatically.</p></div></section>
 </div>}
 
-function BookingScreen({go}:{go:(v:View)=>void}){function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();const d=new FormData(e.currentTarget);const body=`BOOKING REQUEST\n\nName: ${d.get("name")}\nEmail: ${d.get("email")}\nPhone: ${d.get("phone")}\nLocation / Address: ${d.get("location")}\nDuration: ${d.get("duration")}\nRequested Date #1: ${d.get("date1")}\nRequested Time #1: ${d.get("time1")}\nRequested Date #2: ${d.get("date2")}\nRequested Time #2: ${d.get("time2")}\n\nAdditional Details:\n${d.get("details")}`;mail("Siouxville Grinch Booking Request",body)}return <div className="screen-content"><Header kicker="CAUSE SOME HOLIDAY CHAOS" title="Book the Grinch" text={`Send a booking request to ${EMAIL}. The form stays in the app; your email app handles the final send for this test build.`}/><button className="price-strip" onClick={()=>go("pricing")}><BadgeDollarSign/><span><b>See Pricing</b><small>15 minutes through 4 hours</small></span><ChevronRight/></button>
-<form className="form-card card" onSubmit={submit}><label>Name *<input name="name" required/></label><label>Email *<input name="email" type="email" required/></label><label>Phone Number *<input name="phone" required/></label><label>Location / Address *<input name="location" required/></label><label>Duration *<select name="duration" required defaultValue=""><option value="" disabled>Select duration</option><option>15 Minutes</option><option>30 Minutes</option><option>45 Minutes</option><option>60 Minutes</option><option>2 Hours</option><option>3 Hours</option><option>4 Hours</option><option>Over 4 Hours / Negotiable</option></select></label><div className="two"><label>Requested Date #1 *<input name="date1" type="date" required/></label><label>Requested Time #1 *<input name="time1" type="time" required/></label></div><div className="two"><label>Requested Date #2<input name="date2" type="date"/></label><label>Requested Time #2<input name="time2" type="time"/></label></div><label>Additional Details *<textarea name="details" maxLength={2000} rows={6} required placeholder="Tell the Grinch what you're plotting..."/></label><button className="primary wide" type="submit"><Send/>Prepare Booking Email</button></form></div>}
+function BookingScreen({go}:{go:(v:View)=>void}){
+  const [status,setStatus]=useState<"idle"|"sending"|"sent"|"error">("idle");
+  const [error,setError]=useState("");
 
+  async function submit(e:FormEvent<HTMLFormElement>){
+    e.preventDefault();
+    setStatus("sending");
+    setError("");
+
+    const form=e.currentTarget;
+    const d=new FormData(form);
+    const payload={
+      name:String(d.get("name")||""),
+      email:String(d.get("email")||""),
+      phone:String(d.get("phone")||""),
+      location:String(d.get("location")||""),
+      duration:String(d.get("duration")||""),
+      date1:String(d.get("date1")||""),
+      time1:String(d.get("time1")||""),
+      date2:String(d.get("date2")||""),
+      time2:String(d.get("time2")||""),
+      details:String(d.get("details")||"")
+    };
+
+    try{
+      const res=await fetch("/api/booking",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(payload)
+      });
+      const result=await res.json().catch(()=>({}));
+      if(!res.ok) throw new Error(result?.error||"The Grinch's mailroom had a problem.");
+      setStatus("sent");
+      form.reset();
+    }catch(err){
+      setStatus("error");
+      setError(err instanceof Error?err.message:"Unable to send booking request.");
+    }
+  }
+
+  return <div className="screen-content"><Header kicker="CAUSE SOME HOLIDAY CHAOS" title="Book the Grinch" text={`Send a booking request directly to ${EMAIL} without leaving the app.`}/><button className="price-strip" onClick={()=>go("pricing")}><BadgeDollarSign/><span><b>See Pricing</b><small>15 minutes through 4 hours</small></span><ChevronRight/></button>
+<form className="form-card card" onSubmit={submit}><label>Name *<input name="name" required disabled={status==="sending"}/></label><label>Email *<input name="email" type="email" required disabled={status==="sending"}/></label><label>Phone Number *<input name="phone" required disabled={status==="sending"}/></label><label>Location / Address *<input name="location" required disabled={status==="sending"}/></label><label>Duration *<select name="duration" required defaultValue="" disabled={status==="sending"}><option value="" disabled>Select duration</option><option>15 Minutes</option><option>30 Minutes</option><option>45 Minutes</option><option>60 Minutes</option><option>2 Hours</option><option>3 Hours</option><option>4 Hours</option><option>Over 4 Hours / Negotiable</option></select></label><div className="two"><label>Requested Date #1 *<input name="date1" type="date" required disabled={status==="sending"}/></label><label>Requested Time #1 *<input name="time1" type="time" required disabled={status==="sending"}/></label></div><div className="two"><label>Requested Date #2<input name="date2" type="date" disabled={status==="sending"}/></label><label>Requested Time #2<input name="time2" type="time" disabled={status==="sending"}/></label></div><label>Additional Details *<textarea name="details" maxLength={2000} rows={6} required disabled={status==="sending"} placeholder="Tell the Grinch what you're plotting..."/></label>
+{status==="sent"&&<div className="form-notice success"><b>Booking request sent!</b><span>The Grinch's lair has received your request at {EMAIL}.</span></div>}
+{status==="error"&&<div className="form-notice error"><b>That didn't send.</b><span>{error}</span></div>}
+<button className="primary wide" type="submit" disabled={status==="sending"}><Send/>{status==="sending"?"Sending...":"Send Booking Request"}</button></form></div>
+}
 function MessagesScreen(){const sayings=useMemo(()=>["Holiday cheer? Suspicious. I'll investigate.","I'm checking the naughty list. Some of you are making this way too easy.","Tell Santa I was nowhere near those presents.","Your complaint has been filed directly into the fireplace."],[]);const [i,setI]=useState(0);function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();const d=new FormData(e.currentTarget);mail("Message for The Siouxville Grinch",`MESSAGE FOR THE GRINCH\n\nFrom: ${d.get("name")}\nReply email: ${d.get("email")||"Not provided"}\n\n${d.get("message")}`)}return <div className="screen-content"><Header kicker="DIRECT FROM SIOUXVILLE" title="Message the Grinch" text="Ask a question, report naughty behavior, or send the mean green guy a message."/><button className="quote card" onClick={()=>setI((i+1)%sayings.length)}><MessageCircle/><div><small>THE GRINCH SAYS</small><strong>“{sayings[i]}”</strong><span>Tap for another</span></div></button><form className="form-card card" onSubmit={submit}><label>Your name *<input name="name" required/></label><label>Email for a reply<input name="email" type="email"/></label><label>Your message *<textarea name="message" required rows={7} placeholder="Dear Grinch..."/></label><button className="primary wide"><Mail/>Prepare Message</button></form></div>}
 
 function About(){return <div className="screen-content"><Header kicker="THE MEAN GREEN GUY" title="About the Siouxville Grinch"/><section className="card story"><p>My name is Martin Dalcourt. I was born and raised in Toronto, Ontario, moved to Sioux City in 2005, and eventually made my way to Sioux Falls in 2025.</p><p>My creative spark kicked in around 2015 with my first custom-made costume, which came out during events with Monster Karaoke & DJ Services. Early appearances included local daycares and family events.</p><p>By 2019, bookings were growing. In 2021, I upgraded the suit and began using prosthetic masks, and the Grinch appearances have continued growing ever since.</p><p>Christmas is for joy and laughs — and when the Siouxville Grinch is around, there may be a prank or two up his sleeve.</p></section></div>}
@@ -42,4 +85,4 @@ function Header({kicker,title,text}:{kicker:string,title:string,text?:string}){r
 function Fun({icon,title,text}:{icon:React.ReactNode,title:string,text:string}){return <button className="fun-tile">{icon}<b>{title}</b><small>{text}</small></button>}
 
 export default function Page(){const [view,setView]=useState<View>("home");const tab:Tab=(["home","events","book","messages","more"] as View[]).includes(view)?view as Tab:"more";const go=(v:View)=>{setView(v);window.scrollTo({top:0,behavior:"smooth"})};let content:React.ReactNode;switch(view){case"events":content=<EventsScreen/>;break;case"book":content=<BookingScreen go={go}/>;break;case"messages":content=<MessagesScreen/>;break;case"more":content=<More go={go}/>;break;case"about":content=<About/>;break;case"pricing":content=<Pricing/>;break;case"bored":content=<Bored/>;break;case"media":content=<Media/>;break;case"reviews":content=<Reviews/>;break;case"sponsor":content=<Sponsor/>;break;default:content=<HomeScreen go={go}/>}
-const nav=[ ["home","Home",Home],["events","Events",CalendarDays],["book","Book",Gift],["messages","Message",MessageCircle],["more","More",Menu] ] as const;return <main className="app-shell"><header className="top-bar"><span className="brand-dot"/><span>THE SIOUXVILLE GRINCH</span><span className="version">v0.3</span></header><div className="screen">{content}</div><nav className="bottom-nav">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?"active":""} onClick={()=>go(id)}><Icon/><span>{label}</span></button>)}</nav></main>}
+const nav=[ ["home","Home",Home],["events","Events",CalendarDays],["book","Book",Gift],["messages","Message",MessageCircle],["more","More",Menu] ] as const;return <main className="app-shell"><header className="top-bar"><span className="brand-dot"/><span>THE SIOUXVILLE GRINCH</span><span className="version">v0.3.1</span></header><div className="screen">{content}</div><nav className="bottom-nav">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?"active":""} onClick={()=>go(id)}><Icon/><span>{label}</span></button>)}</nav></main>}
