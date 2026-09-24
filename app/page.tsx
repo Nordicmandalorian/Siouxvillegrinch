@@ -124,35 +124,32 @@ function Sponsor(){return <div className="screen-content"><Header kicker="BECOME
 function More({go}:{go:(v:View)=>void}){const items:[[any,string,string,View]]|any=[[Info,"About","Meet Martin and the story behind the Grinch.","about"],[BadgeDollarSign,"Pricing","Appearance pricing and payment options.","pricing"],[Smile,"Bored?","Jokes, activities and Grinchy distractions.","bored"],[Newspaper,"Media","Press coverage and Grinch sightings.","media"],[Star,"Reviews","Judge the mean green guy.","reviews"],[Users,"Sponsorship","Partner with the Siouxville Grinch.","sponsor"]];return <div className="screen-content"><Header kicker="MORE MISCHIEF" title="Explore Siouxville" text="Everything here lives inside the app — no website detours."/><div className="more-list">{items.map(([Icon,title,text,v]:any)=><button className="more-card card" key={title} onClick={()=>go(v)}><Icon/><div><h3>{title}</h3><p>{text}</p></div><ChevronRight/></button>)}</div><div className="contact-line"><Mail/> {EMAIL}</div></div>}
 
 const FRIENDS = [
-  {name:"Bluff's Little Thinkers",url:"https://www.bluffslittlethinkers.com/",domain:"bluffslittlethinkers.com",abbr:"BLT"},
-  {name:"IBEW Holiday Lighted Parade",url:"https://downtownsiouxcity.com/events/ibew-holiday-lighted-parade/",domain:"downtownsiouxcity.com",abbr:"IBEW"},
-  {name:"Downtown Sioux Falls",url:"https://dtsf.com/",domain:"dtsf.com",abbr:"DTSF"},
-  {name:"Falls Overlook Cafe",url:"https://fallsoverlook.com/",domain:"fallsoverlook.com",abbr:"FOC"},
-  {name:"Hy-Vee",url:"https://www.hy-vee.com/stores/detail.aspx?s=151",domain:"hy-vee.com",abbr:"HY-VEE"},
-  {name:"Minnehaha County Sheriff's Office",url:"https://www.minnehahacounty.gov/dept/so/so.php",domain:"minnehahacounty.gov",abbr:"MCSO"},
-  {name:"Monster Karaoke & DJ Services",url:"https://www.facebook.com/share/1DeLF4tFnK/",domain:"facebook.com",abbr:"MONSTER",local:"/friends/monster-karaoke.jpg"},
-  {name:"North Sioux City",url:"https://northsiouxcity-sd.gov/",domain:"northsiouxcity-sd.gov",abbr:"NSC"},
-  {name:"Opportunities Unlimited",url:"https://opportunitiesunlimited.com/",domain:"opportunitiesunlimited.com",abbr:"OU"},
-  {name:"2026 Parade of Lights",url:"https://dtsf.com/event/2026-parade-of-lights/",domain:"dtsf.com",abbr:"PARADE"},
-  {name:"Pickled Palette",url:"https://pickledpalette.com/",domain:"pickledpalette.com",abbr:"PP"},
-  {name:"Sioux City Police Department",url:"https://www.sioux-city.org/166/Police",domain:"sioux-city.org",abbr:"SCPD"},
-  {name:"Sioux City Railroad Museum",url:"https://www.siouxcityrailroadmuseum.org/",domain:"siouxcityrailroadmuseum.org",abbr:"RR"},
-  {name:"Raven Rookery, LLC",url:"https://www.facebook.com/share/1F2Zp5Pd4x/",domain:"facebook.com",abbr:"RAVEN",local:"/friends/raven-rookery.jpg"},
-  {name:"Seaboard Triumph Foods",url:"https://seaboardtriumphfoods.com/",domain:"seaboardtriumphfoods.com",abbr:"STF"},
-  {name:"Dakota County Sheriff's Office",url:"https://dakotacosheriffne.org/",domain:"dakotacosheriffne.org",abbr:"DCSO"},
-  {name:"Sioux Falls Police Department",url:"https://www.siouxfalls.gov/health-safety/police/police-information/law-enforcement-center",domain:"siouxfalls.gov",abbr:"SFPD"},
-  {name:"South Sioux City Police Department",url:"https://www.southsiouxcity.org/department/index.php?structureid=13",domain:"southsiouxcity.org",abbr:"SSCPD"},
-  {name:"Stensland Family Farms",url:"https://www.stenslandfamilyfarms.com/",domain:"stenslandfamilyfarms.com",abbr:"STENSLAND"},
-  {name:"Titans Tavern",url:"https://titanstavern.com/",domain:"titanstavern.com",abbr:"TITANS"},
-  {name:"TM Designs",url:"",domain:"",abbr:"TM",local:"/friends/tm-designs.png"},
-  {name:"Woodbury County Sheriff's Office",url:"https://www.woodburycountyiowa.gov/sheriff/",domain:"woodburycountyiowa.gov",abbr:"WCSO"}
+  {name:"Bluff's Little Thinkers",url:"https://www.bluffslittlethinkers.com/",local:"/friends/01-bluffs-little-thinkers.jpg"},
+  {name:"IBEW Holiday Lighted Parade",url:"https://downtownsiouxcity.com/events/ibew-holiday-lighted-parade/",local:"/friends/02-ibew-holiday-lighted-parade.jpg"},
+  {name:"Downtown Sioux Falls",url:"https://dtsf.com/",local:"/friends/03-downtown-sioux-falls.png"},
+  {name:"Falls Overlook Cafe",url:"https://fallsoverlook.com/",local:"/friends/04-falls-overlook-cafe.png"},
+  {name:"Hy-Vee",url:"https://www.hy-vee.com/stores/detail.aspx?s=151",local:"/friends/05-hy-vee.png"},
+  {name:"Minnehaha County Sheriff's Office",url:"https://www.minnehahacounty.gov/dept/so/so.php",local:"/friends/06-minnehaha-county-sheriff.png"},
+  {name:"Monster Karaoke & DJ Services",url:"https://www.facebook.com/share/1DeLF4tFnK/",local:"/friends/07-monster-karaoke.jpg"},
+  {name:"North Sioux City",url:"https://northsiouxcity-sd.gov/",local:"/friends/08-north-sioux-city.png"},
+  {name:"Opportunities Unlimited",url:"https://opportunitiesunlimited.com/",local:"/friends/09-opportunities-unlimited.png"},
+  {name:"2026 Parade of Lights",url:"https://dtsf.com/event/2026-parade-of-lights/",local:"/friends/10-parade-of-lights.png"},
+  {name:"Pickled Palette",url:"https://pickledpalette.com/",local:"/friends/11-pickled-palette.jpg"},
+  {name:"Sioux City Police Department",url:"https://www.sioux-city.org/166/Police",local:"/friends/12-sioux-city-police.png"},
+  {name:"Sioux City Railroad Museum",url:"https://www.siouxcityrailroadmuseum.org/",local:"/friends/13-sioux-city-railroad-museum.png"},
+  {name:"Raven Rookery, LLC",url:"https://www.facebook.com/share/1F2Zp5Pd4x/",local:"/friends/14-raven-rookery.jpg"},
+  {name:"Seaboard Triumph Foods",url:"https://seaboardtriumphfoods.com/",local:"/friends/15-seaboard-triumph-foods.png"},
+  {name:"Dakota County Sheriff's Office",url:"https://dakotacosheriffne.org/",local:"/friends/16-dakota-county-sheriff.png"},
+  {name:"Sioux Falls Police Department",url:"https://www.siouxfalls.gov/health-safety/police/police-information/law-enforcement-center",local:"/friends/17-sioux-falls-police.jpg"},
+  {name:"South Sioux City Police Department",url:"https://www.southsiouxcity.org/department/index.php?structureid=13",local:"/friends/18-south-sioux-city-police.png"},
+  {name:"Stensland Family Farms",url:"https://www.stenslandfamilyfarms.com/",local:"/friends/19-stensland-family-farms.png"},
+  {name:"Titans Tavern",url:"https://titanstavern.com/",local:"/friends/20-titans-tavern.webp"},
+  {name:"TM Designs",url:"",local:"/friends/21-tm-designs.png"},
+  {name:"Woodbury County Sheriff's Office",url:"https://www.woodburycountyiowa.gov/sheriff/",local:"/friends/22-woodbury-county-sheriff.jpg"}
 ];
 
 function FriendLogo({friend}:{friend:(typeof FRIENDS)[number]}){
-  const [failed,setFailed]=useState(false);
-  if(friend.local) return <img src={friend.local} alt={`${friend.name} logo`}/>;
-  if(failed) return <span className="friend-fallback">{friend.abbr}</span>;
-  return <img src={`https://www.google.com/s2/favicons?domain_url=https://${friend.domain}&sz=256`} alt={`${friend.name} logo`} onError={()=>setFailed(true)}/>;
+  return <img src={friend.local} alt={`${friend.name} logo`} loading="lazy"/>;
 }
 function Friends(){return <div className="screen-content"><Header kicker="THE GRINCH'S ACCOMPLICES" title="Our Friends" text="Businesses, organizations and community partners who have supported — or been gotten by — the Siouxville Grinch."/><div className="friends-grid">{FRIENDS.map((friend)=>friend.url?<a className="friend-card" href={friend.url} target="_blank" rel="noreferrer" key={friend.name}><div className="friend-logo"><FriendLogo friend={friend}/></div><small>Visit Website</small></a>:<div className="friend-card no-link" key={friend.name}><div className="friend-logo"><FriendLogo friend={friend}/></div><small>No Website</small></div>)}</div></div>}
 
@@ -160,4 +157,4 @@ function Header({kicker,title,text}:{kicker:string,title:string,text?:string}){r
 function Fun({icon,title,text,onClick}:{icon:React.ReactNode,title:string,text:string,onClick?:()=>void}){return <button className="fun-tile" onClick={onClick}>{icon}<b>{title}</b><small>{text}</small></button>}
 
 export default function Page(){const [view,setView]=useState<View>("home");const tab:Tab=(["home","events","book","messages","more"] as View[]).includes(view)?view as Tab:"more";const go=(v:View)=>{setView(v);window.scrollTo({top:0,behavior:"smooth"})};let content:React.ReactNode;switch(view){case"events":content=<EventsScreen/>;break;case"book":content=<BookingScreen go={go}/>;break;case"messages":content=<MessagesScreen/>;break;case"more":content=<More go={go}/>;break;case"about":content=<About/>;break;case"pricing":content=<Pricing/>;break;case"bored":content=<Bored go={go}/>;break;case"gallery":content=<TikTokPics/>;break;case"coloring":content=<ColoringBook/>;break;case"friends":content=<Friends/>;break;case"media":content=<Media/>;break;case"reviews":content=<Reviews/>;break;case"sponsor":content=<Sponsor/>;break;default:content=<HomeScreen go={go}/>}
-const nav=[ ["home","Home",Home],["events","Events",CalendarDays],["book","Book",Gift],["messages","Message",MessageCircle],["more","More",Menu] ] as const;return <main className="app-shell"><header className="top-bar"><span className="brand-dot"/><span>THE SIOUXVILLE GRINCH</span><span className="version">v0.3.5.2</span></header><div className="screen">{content}</div><nav className="bottom-nav">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?"active":""} onClick={()=>go(id)}><Icon/><span>{label}</span></button>)}</nav></main>}
+const nav=[ ["home","Home",Home],["events","Events",CalendarDays],["book","Book",Gift],["messages","Message",MessageCircle],["more","More",Menu] ] as const;return <main className="app-shell"><header className="top-bar"><span className="brand-dot"/><span>THE SIOUXVILLE GRINCH</span><span className="version">v0.3.5.3</span></header><div className="screen">{content}</div><nav className="bottom-nav">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?"active":""} onClick={()=>go(id)}><Icon/><span>{label}</span></button>)}</nav></main>}
