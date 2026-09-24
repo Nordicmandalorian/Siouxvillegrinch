@@ -130,14 +130,14 @@ const FRIENDS = [
   {name:"Falls Overlook Cafe",url:"https://fallsoverlook.com/",domain:"fallsoverlook.com",abbr:"FOC"},
   {name:"Hy-Vee",url:"https://www.hy-vee.com/stores/detail.aspx?s=151",domain:"hy-vee.com",abbr:"HY-VEE"},
   {name:"Minnehaha County Sheriff's Office",url:"https://www.minnehahacounty.gov/dept/so/so.php",domain:"minnehahacounty.gov",abbr:"MCSO"},
-  {name:"Monster Karaoke & DJ Services",url:"https://www.facebook.com/share/1DeLF4tFnK/",domain:"facebook.com",abbr:"MONSTER"},
+  {name:"Monster Karaoke & DJ Services",url:"https://www.facebook.com/share/1DeLF4tFnK/",domain:"facebook.com",abbr:"MONSTER",local:"/friends/monster-karaoke.jpg"},
   {name:"North Sioux City",url:"https://northsiouxcity-sd.gov/",domain:"northsiouxcity-sd.gov",abbr:"NSC"},
   {name:"Opportunities Unlimited",url:"https://opportunitiesunlimited.com/",domain:"opportunitiesunlimited.com",abbr:"OU"},
   {name:"2026 Parade of Lights",url:"https://dtsf.com/event/2026-parade-of-lights/",domain:"dtsf.com",abbr:"PARADE"},
   {name:"Pickled Palette",url:"https://pickledpalette.com/",domain:"pickledpalette.com",abbr:"PP"},
   {name:"Sioux City Police Department",url:"https://www.sioux-city.org/166/Police",domain:"sioux-city.org",abbr:"SCPD"},
   {name:"Sioux City Railroad Museum",url:"https://www.siouxcityrailroadmuseum.org/",domain:"siouxcityrailroadmuseum.org",abbr:"RR"},
-  {name:"Raven Rookery, LLC",url:"https://www.facebook.com/share/1F2Zp5Pd4x/",domain:"facebook.com",abbr:"RAVEN"},
+  {name:"Raven Rookery, LLC",url:"https://www.facebook.com/share/1F2Zp5Pd4x/",domain:"facebook.com",abbr:"RAVEN",local:"/friends/raven-rookery.jpg"},
   {name:"Seaboard Triumph Foods",url:"https://seaboardtriumphfoods.com/",domain:"seaboardtriumphfoods.com",abbr:"STF"},
   {name:"Dakota County Sheriff's Office",url:"https://dakotacosheriffne.org/",domain:"dakotacosheriffne.org",abbr:"DCSO"},
   {name:"Sioux Falls Police Department",url:"https://www.siouxfalls.gov/health-safety/police/police-information/law-enforcement-center",domain:"siouxfalls.gov",abbr:"SFPD"},
@@ -160,4 +160,4 @@ function Header({kicker,title,text}:{kicker:string,title:string,text?:string}){r
 function Fun({icon,title,text,onClick}:{icon:React.ReactNode,title:string,text:string,onClick?:()=>void}){return <button className="fun-tile" onClick={onClick}>{icon}<b>{title}</b><small>{text}</small></button>}
 
 export default function Page(){const [view,setView]=useState<View>("home");const tab:Tab=(["home","events","book","messages","more"] as View[]).includes(view)?view as Tab:"more";const go=(v:View)=>{setView(v);window.scrollTo({top:0,behavior:"smooth"})};let content:React.ReactNode;switch(view){case"events":content=<EventsScreen/>;break;case"book":content=<BookingScreen go={go}/>;break;case"messages":content=<MessagesScreen/>;break;case"more":content=<More go={go}/>;break;case"about":content=<About/>;break;case"pricing":content=<Pricing/>;break;case"bored":content=<Bored go={go}/>;break;case"gallery":content=<TikTokPics/>;break;case"coloring":content=<ColoringBook/>;break;case"friends":content=<Friends/>;break;case"media":content=<Media/>;break;case"reviews":content=<Reviews/>;break;case"sponsor":content=<Sponsor/>;break;default:content=<HomeScreen go={go}/>}
-const nav=[ ["home","Home",Home],["events","Events",CalendarDays],["book","Book",Gift],["messages","Message",MessageCircle],["more","More",Menu] ] as const;return <main className="app-shell"><header className="top-bar"><span className="brand-dot"/><span>THE SIOUXVILLE GRINCH</span><span className="version">v0.3.5</span></header><div className="screen">{content}</div><nav className="bottom-nav">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?"active":""} onClick={()=>go(id)}><Icon/><span>{label}</span></button>)}</nav></main>}
+const nav=[ ["home","Home",Home],["events","Events",CalendarDays],["book","Book",Gift],["messages","Message",MessageCircle],["more","More",Menu] ] as const;return <main className="app-shell"><header className="top-bar"><span className="brand-dot"/><span>THE SIOUXVILLE GRINCH</span><span className="version">v0.3.5.1</span></header><div className="screen">{content}</div><nav className="bottom-nav">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?"active":""} onClick={()=>go(id)}><Icon/><span>{label}</span></button>)}</nav></main>}
