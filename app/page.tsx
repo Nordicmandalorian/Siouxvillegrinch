@@ -72,7 +72,46 @@ function BookingScreen({go}:{go:(v:View)=>void}){
 {status==="error"&&<div className="form-notice error"><b>That didn't send.</b><span>{error}</span></div>}
 <button className="primary wide" type="submit" disabled={status==="sending"}><Send/>{status==="sending"?"Sending...":"Send Booking Request"}</button></form></div>
 }
-function MessagesScreen(){const sayings=useMemo(()=>["Holiday cheer? Suspicious. I'll investigate.","I'm checking the naughty list. Some of you are making this way too easy.","Tell Santa I was nowhere near those presents.","Your complaint has been filed directly into the fireplace."],[]);const [i,setI]=useState(0);function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();const d=new FormData(e.currentTarget);mail("Message for The Siouxville Grinch",`MESSAGE FOR THE GRINCH\n\nFrom: ${d.get("name")}\nReply email: ${d.get("email")||"Not provided"}\n\n${d.get("message")}`)}return <div className="screen-content"><Header kicker="DIRECT FROM SIOUXVILLE" title="Message the Grinch" text="Ask a question, report naughty behavior, or send the mean green guy a message."/><button className="quote card" onClick={()=>setI((i+1)%sayings.length)}><MessageCircle/><div><small>THE GRINCH SAYS</small><strong>“{sayings[i]}”</strong><span>Tap for another</span></div></button><form className="form-card card" onSubmit={submit}><label>Your name *<input name="name" required/></label><label>Email for a reply<input name="email" type="email"/></label><label>Your message *<textarea name="message" required rows={7} placeholder="Dear Grinch..."/></label><button className="primary wide"><Mail/>Prepare Message</button></form></div>}
+function MessagesScreen(){
+  const sayings=useMemo(()=>["Holiday cheer? Suspicious. I'll investigate.","I'm checking the naughty list. Some of you are making this way too easy.","Tell Santa I was nowhere near those presents.","Your complaint has been filed directly into the fireplace."],[]);
+  const [i,setI]=useState(0);
+  const [status,setStatus]=useState<"idle"|"sending"|"sent"|"error">("idle");
+  const [error,setError]=useState("");
+
+  async function submit(e:FormEvent<HTMLFormElement>){
+    e.preventDefault();
+    setStatus("sending");
+    setError("");
+
+    const form=e.currentTarget;
+    const d=new FormData(form);
+    const payload={
+      name:String(d.get("name")||""),
+      email:String(d.get("email")||""),
+      message:String(d.get("message")||"")
+    };
+
+    try{
+      const res=await fetch("/api/message",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(payload)
+      });
+      const result=await res.json().catch(()=>({}));
+      if(!res.ok) throw new Error(result?.error||"The Grinch's mailroom had a problem.");
+      setStatus("sent");
+      form.reset();
+    }catch(err){
+      setStatus("error");
+      setError(err instanceof Error?err.message:"Unable to send your message.");
+    }
+  }
+
+  return <div className="screen-content"><Header kicker="DIRECT FROM SIOUXVILLE" title="Message the Grinch" text="Ask a question, report naughty behavior, or send the mean green guy a message without leaving the app."/><button className="quote card" onClick={()=>setI((i+1)%sayings.length)}><MessageCircle/><div><small>THE GRINCH SAYS</small><strong>“{sayings[i]}”</strong><span>Tap for another</span></div></button><form className="form-card card" onSubmit={submit}><label>Your name *<input name="name" required disabled={status==="sending"}/></label><label>Email for a reply<input name="email" type="email" disabled={status==="sending"}/></label><label>Your message *<textarea name="message" required rows={7} maxLength={3000} disabled={status==="sending"} placeholder="Dear Grinch..."/></label>
+{status==="sent"&&<div className="form-notice success"><b>Message sent to Mount Krumpit!</b><span>The Grinch received your message without you leaving the app.</span></div>}
+{status==="error"&&<div className="form-notice error"><b>That message escaped.</b><span>{error}</span></div>}
+<button className="primary wide" type="submit" disabled={status==="sending"}><Mail/>{status==="sending"?"Sending...":"Send to the Grinch"}</button></form></div>
+}
 
 function About(){return <div className="screen-content"><Header kicker="THE MEAN GREEN GUY" title="About the Siouxville Grinch"/><section className="card story"><p>My name is Martin Dalcourt. I was born and raised in Toronto, Ontario, moved to Sioux City in 2005, and eventually made my way to Sioux Falls in 2025.</p><p>My creative spark kicked in around 2015 with my first custom-made costume, which came out during events with Monster Karaoke & DJ Services. Early appearances included local daycares and family events.</p><p>By 2019, bookings were growing. In 2021, I upgraded the suit and began using prosthetic masks, and the Grinch appearances have continued growing ever since.</p><p>Christmas is for joy and laughs — and when the Siouxville Grinch is around, there may be a prank or two up his sleeve.</p></section></div>}
 function Pricing(){const rows=[["15 Minutes","$50"],["30 Minutes","$100"],["45 Minutes","$150"],["60 Minutes","$200"],["2 Hours","$400"],["3 Hours","$600"],["4 Hours","$800"]];return <div className="screen-content"><Header kicker="PRICING & PAYMENT" title="Choose Your Chaos" text="Anything over four hours is negotiable."/><section className="price-list card">{rows.map(r=><div key={r[0]}><b>{r[0]}</b><strong>{r[1]}</strong></div>)}</section><section className="card"><h3>Payment</h3><p>Cash is king. PayPal can be used for Visa/Mastercard payments. Checks are not accepted.</p></section></div>}
@@ -85,4 +124,4 @@ function Header({kicker,title,text}:{kicker:string,title:string,text?:string}){r
 function Fun({icon,title,text}:{icon:React.ReactNode,title:string,text:string}){return <button className="fun-tile">{icon}<b>{title}</b><small>{text}</small></button>}
 
 export default function Page(){const [view,setView]=useState<View>("home");const tab:Tab=(["home","events","book","messages","more"] as View[]).includes(view)?view as Tab:"more";const go=(v:View)=>{setView(v);window.scrollTo({top:0,behavior:"smooth"})};let content:React.ReactNode;switch(view){case"events":content=<EventsScreen/>;break;case"book":content=<BookingScreen go={go}/>;break;case"messages":content=<MessagesScreen/>;break;case"more":content=<More go={go}/>;break;case"about":content=<About/>;break;case"pricing":content=<Pricing/>;break;case"bored":content=<Bored/>;break;case"media":content=<Media/>;break;case"reviews":content=<Reviews/>;break;case"sponsor":content=<Sponsor/>;break;default:content=<HomeScreen go={go}/>}
-const nav=[ ["home","Home",Home],["events","Events",CalendarDays],["book","Book",Gift],["messages","Message",MessageCircle],["more","More",Menu] ] as const;return <main className="app-shell"><header className="top-bar"><span className="brand-dot"/><span>THE SIOUXVILLE GRINCH</span><span className="version">v0.3.1</span></header><div className="screen">{content}</div><nav className="bottom-nav">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?"active":""} onClick={()=>go(id)}><Icon/><span>{label}</span></button>)}</nav></main>}
+const nav=[ ["home","Home",Home],["events","Events",CalendarDays],["book","Book",Gift],["messages","Message",MessageCircle],["more","More",Menu] ] as const;return <main className="app-shell"><header className="top-bar"><span className="brand-dot"/><span>THE SIOUXVILLE GRINCH</span><span className="version">v0.3.2</span></header><div className="screen">{content}</div><nav className="bottom-nav">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?"active":""} onClick={()=>go(id)}><Icon/><span>{label}</span></button>)}</nav></main>}
