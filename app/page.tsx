@@ -169,13 +169,13 @@ const MEDIA_ITEMS = [
     outlet:"Pigeon605", date:"2025",
     title:"With move from Sioux City, Siouxville Grinch brings holiday character to Sioux Falls",
     article:"https://pigeon605.com/with-move-from-sioux-city-siouxville-grinch-brings-holiday-character-to-sioux-falls/",
-    video:"https://www.facebook.com/watch/?v=1405036774320461",
-    paragraphs:[`Pigeon605 featured Martin Dalcourt and the Siouxville Grinch following the move from Sioux City to Sioux Falls. Use the original article and related video links below for the full feature.`]
+    paragraphs:[]
   },
   {
     outlet:"Minnehaha County Sheriff's Office", date:"2026",
     title:"Shop with a Deputy 2026",
-    paragraphs:[`The Siouxville Grinch joined the Minnehaha County Sheriff's Office for Shop with a Deputy 2026. More coverage can be added here as it becomes available.`]
+    video:"https://www.facebook.com/watch/?v=1405036774320461",
+    paragraphs:[]
   }
 ] as const;
 
@@ -219,4 +219,4 @@ function Header({kicker,title,text}:{kicker:string,title:string,text?:string}){r
 function Fun({icon,title,text,onClick}:{icon:React.ReactNode,title:string,text:string,onClick?:()=>void}){return <button className="fun-tile" onClick={onClick}>{icon}<b>{title}</b><small>{text}</small></button>}
 
 export default function Page(){const [view,setView]=useState<View>("home");const tab:Tab=(["home","events","book","messages","more"] as View[]).includes(view)?view as Tab:"more";const go=(v:View)=>{setView(v);window.scrollTo({top:0,behavior:"smooth"})};let content:React.ReactNode;switch(view){case"events":content=<EventsScreen/>;break;case"book":content=<BookingScreen go={go}/>;break;case"messages":content=<MessagesScreen/>;break;case"more":content=<More go={go}/>;break;case"about":content=<About/>;break;case"pricing":content=<Pricing/>;break;case"bored":content=<Bored go={go}/>;break;case"gallery":content=<TikTokPics/>;break;case"coloring":content=<ColoringBook/>;break;case"friends":content=<Friends/>;break;case"media":content=<Media/>;break;case"reviews":content=<Reviews/>;break;case"sponsor":content=<Sponsor/>;break;default:content=<HomeScreen go={go}/>}
-const nav=[ ["home","Home",Home],["events","Events",CalendarDays],["book","Book",Gift],["messages","Message",MessageCircle],["more","More",Menu] ] as const;return <main className="app-shell"><header className="top-bar"><span className="brand-dot"/><span>THE SIOUXVILLE GRINCH</span><span className="version">v0.3.6</span></header><div className="screen">{content}</div><nav className="bottom-nav">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?"active":""} onClick={()=>go(id)}><Icon/><span>{label}</span></button>)}</nav></main>}
+const nav=[ ["home","Home",Home],["events","Events",CalendarDays],["book","Book",Gift],["messages","Message",MessageCircle],["more","More",Menu] ] as const;return <main className="app-shell"><header className="top-bar"><span className="brand-dot"/><span>THE SIOUXVILLE GRINCH</span><span className="version">v0.3.6.1</span></header><div className="screen">{content}</div><nav className="bottom-nav">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?"active":""} onClick={()=>go(id)}><Icon/><span>{label}</span></button>)}</nav></main>}
