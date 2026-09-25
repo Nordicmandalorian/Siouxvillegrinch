@@ -118,7 +118,69 @@ function Pricing(){const rows=[["15 Minutes","$50"],["30 Minutes","$100"],["45 M
 function Bored({go}:{go:(v:View)=>void}){return <div className="screen-content"><Header kicker="BORED?" title="Pick Your Mischief" text="A mobile home for the fun side of Siouxville."/><div className="tile-grid"><Fun icon={<Sparkles/>} title="Surprise Me" text="Random Grinch joke or challenge"/><Fun icon={<Camera/>} title="TikTok Pics" text="Photo fun and poses" onClick={()=>go("gallery")}/><Fun icon={<PartyPopper/>} title="Color a Grinch" text="20 printable coloring pages" onClick={()=>go("coloring")}/><Fun icon={<Users/>} title="Our Friends" text="Community partners" onClick={()=>go("friends")}/><Fun icon={<Images/>} title="Photo Gallery" text="Grinch sightings"/><Fun icon={<Gift/>} title="Advent Calendar" text="Daily holiday mischief"/></div></div>}
 function TikTokPics(){const pics=Array.from({length:12},(_,i)=>`/tiktok-pics/${588+i}.webp`);const [selected,setSelected]=useState<string|null>(null);return <div className="screen-content"><Header kicker="TIKTOK PICS" title="Siouxville Picture Vault" text="Tap any image for a closer look."/><div className="tiktok-grid">{pics.map((src,i)=><button className="tiktok-card" key={src} onClick={()=>setSelected(src)} aria-label={`Open TikTok picture ${i+1}`}><img src={src} alt={`Siouxville Grinch TikTok picture ${i+1}`} loading="lazy"/></button>)}</div>{selected&&<button className="lightbox" onClick={()=>setSelected(null)} aria-label="Close image"><img src={selected} alt="Selected Siouxville Grinch TikTok picture"/><span>Tap anywhere to close</span></button>}</div>}
 function ColoringBook(){const pages=Array.from({length:20},(_,i)=>`/coloring-pages/${606+i}.png`);const [selected,setSelected]=useState<string|null>(null);return <div className="screen-content"><Header kicker="COLOR A GRINCH" title="Siouxville Coloring Book" text="20 Siouxville Grinch coloring pages. Tap any page to view it full size."/><div className="coloring-grid">{pages.map((src,i)=><button className="coloring-card" key={src} onClick={()=>setSelected(src)} aria-label={`Open coloring page ${i+1}`}><img src={src} alt={`Siouxville Grinch coloring page ${i+1}`} loading="lazy"/><span>Page {i+1}</span></button>)}</div>{selected&&<button className="lightbox coloring-lightbox" onClick={()=>setSelected(null)} aria-label="Close coloring page"><img src={selected} alt="Selected Siouxville Grinch coloring page"/><span>Tap anywhere to close</span></button>}</div>}
-function Media(){return <div className="screen-content"><Header kicker="IN THE WILD" title="Media Articles" text="The Siouxville Grinch has been spotted by local media across the region."/><section className="card media-list">{["Sioux City Journal · 2023","KCAU · 2024","KTIV · 2025","KXRB · 2025","Pigeon605 · 2025","MCS · 2026"].map(x=><div key={x}><Newspaper/><b>{x}</b></div>)}</section></div>}
+const MEDIA_ITEMS = [
+  {
+    outlet:"Sioux City Journal", date:"December 19, 2023", author:"Caitlin Yamada",
+    title:"The Siouxville Grinch brings devious character to life this holiday season",
+    article:"https://siouxcityjournal.com/news/local/article_3c519a42-9dd5-11ee-b1af-9f1cf2921645.html",
+    paragraphs:[
+      `SIOUX CITY — “The Grinch hated Christmas. The whole Christmas season.” But sometimes, the Siouxville Grinch enjoys it.`,
+      `The “Siouxville Grinch,” also known as Martin Dalcourt, has been frequenting the tri-state area for the past three years, bringing the famed Dr. Seuss character to life. He can be found visiting local stores and events, teasing children and adults alike.`,
+      `On Saturday, the Siouxville Grinch visited the Marketplace Hy-Vee store, greeting children and their parents for a morning breakfast. He strolled about with his famous onion, taking pictures and joking around with the kids.`,
+      `While some kids were thrilled to see one of their favorite Christmas characters, others were not. Dalcourt has always been interested in special effects makeup. He ran a seasonal Halloween store in Canada and could always be found in the makeup department trying out different products and techniques.`,
+      `When deciding what character to portray in the Christmas season, Dalcourt felt the Grinch was a good middle ground. The Grinch allows him to make a difference in children's lives, seeing them laugh and smile at an iconic character.`,
+      `Dalcourt's version of the Grinch is closely related to Jim Carrey's portrayal. To prepare for the role, each year Dalcourt watches “How the Grinch Stole Christmas.” While the Grinch in the movie is devious and grumpy, Dalcourt said he must balance mischief with kindness.`,
+      `Being the Grinch is not cheap. His suit was a $1,000 custom-fit creation. Each prosthetic mask costs $100. It takes him about two hours to get ready and requires touch-ups between events.`,
+      `It's the youngsters who make it worthwhile, Dalcourt said. He recalled an appearance at the Railroad Museum in Sioux City where a sad little girl approached him because all she wanted was a hug.`,
+      `Each appearance requires nearly two hours of preparation — special contacts, prosthetics, lengthened eyelashes, additional makeup, and three layers of clothing including the custom Grinch suit over a sweat-wicking undergarment and Santa coat.`,
+      `Dalcourt, who also offers Monster Karaoke and DJ Services, wants every child he meets to walk away with a smile. He wants children to see the jovial side of the Grinch as well as the mischievous character they know.`
+    ]
+  },
+  {
+    outlet:"KCAU", date:"2024", title:"KCAU 2024 News Clip",
+    video:"https://youtu.be/6jUoWoqVH50?feature=shared",
+    paragraphs:[`A KCAU television news appearance featuring the Siouxville Grinch.`]
+  },
+  {
+    outlet:"KXRB", date:"December 16, 2025", author:"Christine Manika",
+    title:"Have You Met The Newest Sioux Falls Grinch? He’s Coming To See You Soon",
+    article:"https://kxrb.com/new-sioux-falls-grinch-christmas/?tm_source=tsmclip&utm_medium=referral",
+    paragraphs:[
+      `There's a new Sioux Falls green monster in town — Mr. Grinch. Say hello to The Siouxville Grinch. He's a big deal in Sioux City, Iowa, and South Sioux City, Nebraska. Now he's calling Sioux Falls home for the Christmas season.`,
+      `The Siouxville Grinch (AKA Martin Dalcourt) is more than a fictional character from the classic Dr. Seuss book. This special holiday elf is bringing The Grinch's magic to life. From Whoville to Siouxville, he promises to bring Christmas cheer to all those who hear.`,
+      `Pigeon605 met with Martin Dalcourt and learned about his long history portraying the Grinch. His green adventures started when he lived in Canada. It wasn't until he moved to Sioux City that he became The Siouxville Grinch. Martin Dalcourt and his wife, Tammy, now call Sioux Falls home.`,
+      `Martin made his big Siouxville Grinch grand entrance to Sioux Falls during the annual Parade of Lights celebration.`,
+      `The article also highlighted upcoming Nebraska, Iowa and South Dakota appearances, including daycare drop-ins, Panera Bread, Opportunities Unlimited, Little Thinkers, Hy-Vee and the Falls Overlook Cafe.`
+    ]
+  },
+  {
+    outlet:"KTIV", date:"December 20, 2025", author:"Nathan Price",
+    title:`Sioux City comic store hosts first “ugly sweater” contest with 'The Siouxville Grinch' as the Judge`,
+    article:"https://www.ktiv.com/2025/12/20/sioux-city-comic-store-hosts-first-ugly-sweater-contest-with-grinch-judge/",
+    video:"https://youtu.be/UfUBJJ8PsKA?is=mmdGdFDbX_Ds1-YA",
+    paragraphs:[
+      `SIOUX CITY (KTIV) - ACME Comics and Collectibles held their first ugly sweater contest Friday, Dec. 20, at around 12 p.m. with a special guest judge: the Siouxville Grinch.`,
+      `The local comic store welcomed families to spend a little quality time with the Grinch while shopping for comics and collectibles.`,
+      `Kevin McGarry, owner of ACME Comics, said the visit helps bring in customers during a time when local businesses could use support. He emphasized the importance of local shops as places where people with shared interests can spend time together.`,
+      `The Grinch visited the shop from 12 to 1 p.m.`
+    ]
+  },
+  {
+    outlet:"Pigeon605", date:"2025",
+    title:"With move from Sioux City, Siouxville Grinch brings holiday character to Sioux Falls",
+    article:"https://pigeon605.com/with-move-from-sioux-city-siouxville-grinch-brings-holiday-character-to-sioux-falls/",
+    video:"https://www.facebook.com/watch/?v=1405036774320461",
+    paragraphs:[`Pigeon605 featured Martin Dalcourt and the Siouxville Grinch following the move from Sioux City to Sioux Falls. Use the original article and related video links below for the full feature.`]
+  },
+  {
+    outlet:"Minnehaha County Sheriff's Office", date:"2026",
+    title:"Shop with a Deputy 2026",
+    paragraphs:[`The Siouxville Grinch joined the Minnehaha County Sheriff's Office for Shop with a Deputy 2026. More coverage can be added here as it becomes available.`]
+  }
+] as const;
+
+function Media(){return <div className="screen-content"><Header kicker="IN THE WILD" title="Media Coverage" text="Read Siouxville Grinch coverage inside the app, then jump to the original story or video when available."/><div className="media-library">{MEDIA_ITEMS.map((item,i)=><details className="media-story card" key={`${item.outlet}-${item.title}`} open={i===0}><summary><span className="media-icon"><Newspaper/></span><span className="media-summary"><small>{item.outlet} · {item.date}</small><b>{item.title}</b>{"author" in item&&item.author&&<em>By {item.author}</em>}</span><ChevronRight className="media-chevron"/></summary><div className="media-body">{item.paragraphs.map((paragraph,j)=><p key={j}>{paragraph}</p>)}<div className="media-actions">{"article" in item&&item.article&&<a className="primary" href={item.article} target="_blank" rel="noreferrer"><Newspaper/>Read Original Article</a>}{"video" in item&&item.video&&<a className="red-button" href={item.video} target="_blank" rel="noreferrer"><Camera/>Watch Video</a>}</div></div></details>)}</div></div>}
+
 function Reviews(){function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();const d=new FormData(e.currentTarget);mail("Siouxville Grinch Review",`GRINCHMAS REVIEW\n\nName: ${d.get("name")}\nRating: ${d.get("rating")}/5\n\n${d.get("review")}`)}return <div className="screen-content"><Header kicker="JUDGING THE MEAN GREEN GUY" title="Grinchmas Reviews" text="Be among the first to leave a review through the app."/><form className="form-card card" onSubmit={submit}><label>Name<input name="name" required/></label><label>Rating<select name="rating" defaultValue="5"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></label><label>Review<textarea name="review" required rows={6}/></label><button className="primary wide"><Star/>Prepare Review</button></form></div>}
 function Sponsor(){return <div className="screen-content"><Header kicker="BECOME A SPONSOR" title="Partner with the Grinch" text="Sponsorships help bring more holiday magic to Sioux Falls and beyond."/><section className="card"><HandHeart/><h3>Businesses, creators & community supporters</h3><p>Support events, appearances, and community projects — or pitch a partnership of your own.</p><button className="primary wide top-gap" onClick={()=>mail("Siouxville Grinch Sponsorship Inquiry","SPONSORSHIP INQUIRY\n\nName / Business:\nPhone:\n\nTell us what you have in mind:\n")}><Mail/>Contact About Sponsorship</button></section></div>}
 function More({go}:{go:(v:View)=>void}){const items:[[any,string,string,View]]|any=[[Info,"About","Meet Martin and the story behind the Grinch.","about"],[BadgeDollarSign,"Pricing","Appearance pricing and payment options.","pricing"],[Smile,"Bored?","Jokes, activities and Grinchy distractions.","bored"],[Newspaper,"Media","Press coverage and Grinch sightings.","media"],[Star,"Reviews","Judge the mean green guy.","reviews"],[Users,"Sponsorship","Partner with the Siouxville Grinch.","sponsor"]];return <div className="screen-content"><Header kicker="MORE MISCHIEF" title="Explore Siouxville" text="Everything here lives inside the app — no website detours."/><div className="more-list">{items.map(([Icon,title,text,v]:any)=><button className="more-card card" key={title} onClick={()=>go(v)}><Icon/><div><h3>{title}</h3><p>{text}</p></div><ChevronRight/></button>)}</div><div className="contact-line"><Mail/> {EMAIL}</div></div>}
@@ -157,4 +219,4 @@ function Header({kicker,title,text}:{kicker:string,title:string,text?:string}){r
 function Fun({icon,title,text,onClick}:{icon:React.ReactNode,title:string,text:string,onClick?:()=>void}){return <button className="fun-tile" onClick={onClick}>{icon}<b>{title}</b><small>{text}</small></button>}
 
 export default function Page(){const [view,setView]=useState<View>("home");const tab:Tab=(["home","events","book","messages","more"] as View[]).includes(view)?view as Tab:"more";const go=(v:View)=>{setView(v);window.scrollTo({top:0,behavior:"smooth"})};let content:React.ReactNode;switch(view){case"events":content=<EventsScreen/>;break;case"book":content=<BookingScreen go={go}/>;break;case"messages":content=<MessagesScreen/>;break;case"more":content=<More go={go}/>;break;case"about":content=<About/>;break;case"pricing":content=<Pricing/>;break;case"bored":content=<Bored go={go}/>;break;case"gallery":content=<TikTokPics/>;break;case"coloring":content=<ColoringBook/>;break;case"friends":content=<Friends/>;break;case"media":content=<Media/>;break;case"reviews":content=<Reviews/>;break;case"sponsor":content=<Sponsor/>;break;default:content=<HomeScreen go={go}/>}
-const nav=[ ["home","Home",Home],["events","Events",CalendarDays],["book","Book",Gift],["messages","Message",MessageCircle],["more","More",Menu] ] as const;return <main className="app-shell"><header className="top-bar"><span className="brand-dot"/><span>THE SIOUXVILLE GRINCH</span><span className="version">v0.3.5.3</span></header><div className="screen">{content}</div><nav className="bottom-nav">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?"active":""} onClick={()=>go(id)}><Icon/><span>{label}</span></button>)}</nav></main>}
+const nav=[ ["home","Home",Home],["events","Events",CalendarDays],["book","Book",Gift],["messages","Message",MessageCircle],["more","More",Menu] ] as const;return <main className="app-shell"><header className="top-bar"><span className="brand-dot"/><span>THE SIOUXVILLE GRINCH</span><span className="version">v0.3.6</span></header><div className="screen">{content}</div><nav className="bottom-nav">{nav.map(([id,label,Icon])=><button key={id} className={tab===id?"active":""} onClick={()=>go(id)}><Icon/><span>{label}</span></button>)}</nav></main>}

@@ -35,3 +35,21 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{opacity:.65;cur
 .friend-fallback{display:grid;place-items:center;width:100%;min-height:220px;background:#050805;color:#00b91e;border-radius:12px;font-size:clamp(30px,9vw,58px);font-weight:1000;letter-spacing:.04em;text-align:center;padding:20px}
 .friend-card small{color:var(--green);font-weight:900;font-size:18px;line-height:1;text-align:center;text-transform:none;letter-spacing:0}
 @media(max-width:430px){.friends-grid{gap:20px}.friend-card{padding:22px;border-radius:17px}.friend-logo{border-radius:13px}.friend-card small{font-size:18px}}
+
+/* v0.3.6 — native Media library */
+.media-library{display:grid;gap:12px}
+.media-story{padding:0;overflow:hidden}
+.media-story summary{list-style:none;display:grid;grid-template-columns:34px 1fr 24px;gap:11px;align-items:center;padding:17px;cursor:pointer}
+.media-story summary::-webkit-details-marker{display:none}
+.media-icon{color:var(--green);display:grid;place-items:center}
+.media-summary{display:grid;gap:4px;min-width:0}
+.media-summary small{color:var(--green);font-weight:1000;letter-spacing:.05em;text-transform:uppercase}
+.media-summary b{font-size:17px;line-height:1.25}
+.media-summary em{font-style:normal;color:#aeb8ae;font-size:12px}
+.media-chevron{color:var(--green);transition:transform .18s ease}
+.media-story[open] .media-chevron{transform:rotate(90deg)}
+.media-body{border-top:1px solid #293229;padding:18px;display:grid;gap:14px}
+.media-body p{color:#e0e5df}
+.media-actions{display:flex;flex-wrap:wrap;gap:10px;padding-top:4px}
+.media-actions a{text-decoration:none;min-height:46px}
+@media(max-width:520px){.media-actions{display:grid}.media-actions a{width:100%}.media-story summary{padding:15px}.media-body{padding:16px}}
