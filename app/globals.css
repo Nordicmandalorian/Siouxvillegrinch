@@ -53,3 +53,6 @@ button:disabled,input:disabled,select:disabled,textarea:disabled{opacity:.65;cur
 .media-actions{display:flex;flex-wrap:wrap;gap:10px;padding-top:4px}
 .media-actions a{text-decoration:none;min-height:46px}
 @media(max-width:520px){.media-actions{display:grid}.media-actions a{width:100%}.media-story summary{padding:15px}.media-body{padding:16px}}
+
+/* v0.3.7 — native Sponsorship hub + Grinchmail form */
+.sponsor-hub{display:grid;gap:12px}.sponsor-choice{width:100%;display:grid;grid-template-columns:32px 1fr 24px;align-items:center;gap:12px;text-align:left;color:#fff}.sponsor-choice>svg{color:var(--green)}.sponsor-choice p{font-size:13px}.logo-note{display:flex;align-items:flex-start;gap:10px;padding:13px;border:1px solid rgba(0,255,40,.35);border-radius:12px;color:#dce3dc;background:#050805}.logo-note svg{flex:0 0 auto;color:var(--green)}.logo-note b{color:var(--green)}.form-card label small{font-weight:500;color:#aeb8ae}.sponsor-info-card{text-align:center}.sponsor-info-card>svg,.empty-sponsors>svg{width:44px;height:44px;color:var(--green);margin-bottom:10px}.sponsor-info-card a{text-decoration:none}.empty-sponsors{text-align:center;padding:36px 20px}.empty-sponsors h3{color:var(--green)}
